@@ -1,6 +1,7 @@
 kind: pipeline
 name: default
 
+steps:
 - name: config-mongoid.yml
   image: ruby:2.4.6
   commands:
