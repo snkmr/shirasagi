@@ -62,6 +62,7 @@ steps:
     RAILS_ENV: test
     sandbox: 1
     allow_open_jtalk: 1
+    ldap_host: 153.122.23.169
 
 services:
 - name: mongo
