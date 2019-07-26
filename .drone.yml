@@ -38,7 +38,8 @@ steps:
   - cp -n config/samples/*.rb  config/
   - sed -i 's/localhost:27017/mongo:27017/g' config/mongoid.yml
   - cp -n config/defaults/webmail.yml config/
-  - sed -i 's/#\ test_by:\ user/test_by:\ docker/g' config/webmail.yml
+  #- sed -i 's/host:\ localhost/host:\ mail/g' config/webmail.yml
+  #- sed -i 's/#\ test_by:\ user/test_by:\ docker/g' config/webmail.yml
 
 - name: rspec
   image: ruby:2.4.6

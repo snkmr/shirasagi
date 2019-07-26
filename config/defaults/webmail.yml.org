@@ -18,8 +18,7 @@ production: &production
   clients:
     default:
       # host
-      #host: localhost
-      host: mail
+      host: localhost
       options:
         port: 143
       # auth_type: LOGIN, PLAIN, CRAM-MD5, DIGEST-MD5
@@ -133,7 +132,7 @@ production: &production
 test:
   <<: *production
   disable: false
-  #disable_alias: false
+  disable_alias: false
 
   # test method: user or docker
   # test_by: user
