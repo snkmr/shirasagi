@@ -13,7 +13,7 @@ steps:
   image: ruby:2.4.6
   commands:
   - cd config/defaults
-  - cp -n webmail.yml ../
+  - cp -n job.yml ../
   - sed -i 's/host: localhost/host: mail/g' ../webmail.yml
   - cat ../webmail.yml
 
