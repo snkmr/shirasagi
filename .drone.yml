@@ -31,55 +31,6 @@ steps:
   - name: cache
     path: /cache
 
-- name: build-mecab
-  image: ruby:2.4.6
-  commands:
-  - export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
-  # mecab
-  - cd /drone/src/vendor/mecab
-  - wget -O mecab-0.996.tar.gz 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7cENtOXlicTFaRUE'
-  - tar xzf mecab-0.996.tar.gz && cd mecab-0.996
-  - ./configure --enable-utf8-only && make && make install
-  # mecab-ipadic
-  - cd /drone/src/vendor/mecab
-  - wget -O mecab-ipadic-2.7.0-20070801.tar.gz 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM'
-  - wget https://raw.githubusercontent.com/shirasagi/shirasagi/stable/vendor/mecab/mecab-ipadic-2.7.0-20070801.patch
-  - tar xzf mecab-ipadic-2.7.0-20070801.tar.gz && cd mecab-ipadic-2.7.0-20070801
-  - patch -p1 < ../mecab-ipadic-2.7.0-20070801.patch
-  - ./configure --with-charset=UTF-8 && make && make install
-  # mecab-ruby
-  - cd /drone/src/vendor/mecab
-  - wget -O mecab-ruby-0.996.tar.gz 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7VUNlczBWVDZJbE0'
-  - tar xzf mecab-ruby-0.996.tar.gz && cd mecab-ruby-0.996
-  - ruby extconf.rb && make && make install
-
-- name: build-open_jtalk
-  image: ruby:2.4.6
-  commands:
-  - export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
-  # hts_engine_API
-  - cd /drone/src/vendor/mecab
-  - wget http://downloads.sourceforge.net/hts-engine/hts_engine_API-1.08.tar.gz
-  - tar xzf hts_engine_API-1.08.tar.gz && cd hts_engine_API-1.08
-  - ./configure && make && make install
-  # open_jtalk
-  - cd /drone/src/vendor/mecab
-  - wget http://downloads.sourceforge.net/open-jtalk/open_jtalk-1.07.tar.gz
-  - tar xzf open_jtalk-1.07.tar.gz && cd open_jtalk-1.07
-  - sed -i "s/#define MAXBUFLEN 1024/#define MAXBUFLEN 10240/" bin/open_jtalk.c
-  - sed -i "s/0x00D0 SPACE/0x000D SPACE/" mecab-naist-jdic/char.def
-  - ./configure --with-charset=UTF-8 && make && make install
-  # lame
-  - cd /drone/src/vendor/mecab
-  - wget http://downloads.sourceforge.net/lame/lame-3.99.5.tar.gz
-  - tar xzf lame-3.99.5.tar.gz && cd lame-3.99.5
-  - ./configure && make && make install
-  # sox
-  - cd /drone/src/vendor/mecab
-  - wget http://downloads.sourceforge.net/sox/sox-14.4.1.tar.gz
-  - tar xvzf sox-14.4.1.tar.gz && cd sox-14.4.1
-  - ./configure && make && make install
-
 - name: config-mongoid.yml
   image: ruby:2.4.6
   commands:
@@ -90,40 +41,9 @@ steps:
 - name: config-webmail.yml
   image: ruby:2.4.6
   commands:
-  - cp -n config/defaults/webmail.yml config/
-  - sed -i 's/host: localhost/host: mail/g' config/webmail.yml
-
-- name: rspec
-  image: ruby:2.4.6
-  commands:
-  # chrome
-  - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-  - sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-  - apt-get update && apt-get install -y google-chrome-stable
-  # font
-  - apt install -y fonts-ipafont fonts-ipaexfont && fc-cache -fv
-  # mecab
-  - cd /drone/src/vendor/mecab/mecab-0.996 && make install
-  - cd ../mecab-ipadic-2.7.0-20070801 && make install
-  - cd ../mecab-ruby-0.996 && make install
-  - echo '/usr/local/lib' >> /etc/ld.so.conf.d/usrlocal.conf && ldconfig
-  # open_jtalk
-  - cd /drone/src/vendor/mecab/hts_engine_API-1.08 && make install
-  - cd ../open_jtalk-1.07 && make install
-  - cd ../lame-3.99.5 && make install
-  - cd ../sox-14.4.1 && make install
-  - ldconfig
-  # rspec
-  - cd /drone/src
-  - bundle check --path=vendor/bundle
-  - bundle exec rspec spec/features/gws/users_spec.rb
-  #- bundle exec rspec spec/features/article
-  #- bundle exec rspec spec/features/article/pages/contact_spec.rb
-  #- bundle exec rspec spec/features/article/pages/opendata_ref_individual_resources_spec.rb
-  environment:
-    RAILS_ENV: test
-    sandbox: 1
-    allow_open_jtalk: 1
+  - pwd && ls config/defaults/
+  #- cp -n config/defaults/webmail.yml config/
+  #- sed -i 's/host: localhost/host: mail/g' config/webmail.yml
 
 services:
 - name: mongo
