@@ -19,9 +19,10 @@ production: &production
     default:
       # host
       #host: localhost
-      host: mail
+      host: devci.web-tips.co.jp
       options:
-        port: 143
+        #port: 143
+        port: 10143
       # auth_type: LOGIN, PLAIN, CRAM-MD5, DIGEST-MD5
       auth_type: LOGIN
       # account: uid, email
