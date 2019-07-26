@@ -13,7 +13,7 @@ steps:
   image: ruby:2.4.6
   commands:
   - cp -n config/defaults/webmail.yml  config/
-  - sed -e 's/host: localhost/host: mail/g' config/webmail.yml
+  - sed -e 's/host:<space>localhost/host:<space>mail/g' config/webmail.yml
   - cat config/webmail.yml
   - cat config/mongoid.yml
 
