@@ -12,7 +12,7 @@ steps:
 - name: config-webmail.yml
   image: ruby:2.4.6
   commands:
-  - cp -n config/defaults/webmail.yml config
+  - cp -n config/defaults/webmail.yml config/webmail.yml
   - sed -i 's/host: localhost/host: mail/g' config/webmail.yml
 
 services:
