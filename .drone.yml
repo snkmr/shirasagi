@@ -12,8 +12,9 @@ steps:
 - name: config-webmail.yml
   image: ruby:2.4.6
   commands:
-  - cp config/defaults/webmail.yml config/webmail.yml
+  - cp -n config/defaults/*.yml config/
   - sed -i 's/host: localhost/host: mail/g' config/webmail.yml
+  - cat config/webmail.yml
 
 services:
 - name: mongo
