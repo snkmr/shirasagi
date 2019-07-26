@@ -16,8 +16,8 @@ steps:
   - cp job.yml bk_job.yml
   - pwd && ls 
   - ls -al job.yml
-  #- sed -i 's/host: localhost/host: mail/g' ../webmail.yml
-  #- cat ../webmail.yml
+  - sed -i 's/host: localhost/host: mail/g' webmail.yml
+  - cat webmail.yml
 
 services:
 - name: mongo
