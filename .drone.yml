@@ -7,13 +7,13 @@ steps:
   commands:
   - cp -n config/samples/*.yml config/
   - cp -n config/samples/*.rb  config/
-  - sed -i "s/localhost:27017/mongo:27017/g" config/mongoid.yml
+  - sed -i 's/localhost:27017/mongo:27017/g' config/mongoid.yml
 
 - name: config-webmail.yml
   image: ruby:2.4.6
   commands:
   - cp -n config/defaults/webmail.yml  config/
-  - sed -i "s/host: localhost/host: mail/g" config/webmail.yml
+  - sed 's/host: localhost/host: mail/g' config/webmail.yml
   - cat config/webmail.yml
   - cat config/mongoid.yml
 
