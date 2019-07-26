@@ -80,14 +80,18 @@ steps:
   - tar xvzf sox-14.4.1.tar.gz && cd sox-14.4.1
   - ./configure && make && make install
 
-- name: config-copy
+- name: config-mongoid.yml
   image: ruby:2.4.6
   commands:
   - cp -n config/samples/*.yml config/
   - cp -n config/samples/*.rb  config/
-  #- cp -n config/defaults/webmail.yml config/
   - sed -i 's/localhost:27017/mongo:27017/g' config/mongoid.yml
-  #- sed -i 's/host: localhost/host: mail/g' config/webmail.yml
+
+- name: config-webmail.yml
+  image: ruby:2.4.6
+  commands:
+  - cp -n config/defaults/webmail.yml config/
+  - sed -i 's/host: localhost/host: mail/g' config/webmail.yml
 
 - name: rspec
   image: ruby:2.4.6
